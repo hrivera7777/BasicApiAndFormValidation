@@ -5,16 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Basic Boostrap</title>
+    <script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>
     <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.jqueryui.min.css" rel="stylesheet">
     <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 
 </head>
 
-<body class="d-grid gap-2">
+<body class="d-grid gap-2" onload="setGraph()">
     <header>
         <!-- este es un nav bar donde esta el logo-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -59,6 +62,10 @@
             <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
             <button type="button" class="btn btn-outline-primary">search</button>
         </div>
+    </div>
+
+    <div class="p-2 container-md " id="graph" style="width:1024px;height:250px;">
+
     </div>
 
     <!-- carrusel -->
@@ -306,19 +313,47 @@
         <div class="row">
             <div class="col-md">
                 <form>
-                    <div class="form-group">
+                    <div class="form-group p-2 container-md">
+                        <label for="exampleInputName">Nombre y apellidos</label>
+                        <input type="text" class="form-control" id="exampleInputName" placeholder="Ingrese su nombre y apellido" required>
+                    </div>
+                    <div class="form-group p-2 container-md">
                         <label for="exampleInputEmail1">Correo electronico</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ingrese email">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ingrese email" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group p-2 container-md">
                         <label for="exampleInputPassword1">Contraseña</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <input type="password" class="form-control" id="exampleInputPassword1" onfocusout="checkPassword()" placeholder="Password" required pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,11}$" title="Debe contener almenos una letra en mayúscula, una letra minúscula y un caracter especial por ejemplo (#?!@$%^&*-) y entre 8 y 11 caracteres">
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="form-group p-2 container-md">
+                        <label for="exampleInputPassword2">Confirme la Contraseña</label>
+                        <input type="password" class="form-control" id="exampleInputPassword2" onfocusout="checkPassword()" placeholder="Password" required pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,11}$">
+                        <label hidden id="check"> Las Contraseñas no son iguales </label>
                     </div>
-                    <button type="submit" class="btn btn-info">Submit</button>
+                    <div class="p-2 container-md">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" onclick="getCheckLegalAge()" value="option1" checked>
+                        <label class="form-check-label" for="exampleRadio2">Aun no tengo 18 años</label>
+                    </div>
+                    <div class="p-2 container-md">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio2" onclick="getCheckLegalAge()" value="option2">
+                        <label class="form-check-label" for="exampleRadio1">Sí, tengo más de 18 años</label>
+                    </div>
+                    <div class="p-2 container-md" id="older" hidden>
+                        <div class="p-2 container-md">
+                            <label for="date" class="col-sm-1 col-form-label">Date</label>
+                            <div class="input-group date" id="datepicker">
+                                <input type="text" class="form-control" id="birthDate" onfocusout="verifiedLegalAge()">
+                                <span class="input-group-append"></span>
+                            </div>
+                        </div>
+                        <label hidden id="illegal"> La fecha de nacimiento no es valida, verifique que sea valido</label>
+
+                        <div class="p-2 container-md">
+                            <label for="formFile" class="form-label">agregue su documento de identidad</label>
+                            <input class="form-control" type="file" id="formFile" multiple />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-info" disabled id="submit">Submit</button>
                 </form>
             </div>
             <!-- iconos -->
@@ -466,7 +501,6 @@
     <!-- Copyright -->
 </footer>
 
-<script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.jqueryui.min.js"></script>
@@ -477,5 +511,7 @@
         $('#data_table').DataTable();
     });
 </script>
+
+<script src="script.js"></script>
 
 </html>
